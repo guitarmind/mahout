@@ -19,7 +19,6 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.apache.mahout</groupId>
     <artifactId>mahout</artifactId>
@@ -37,6 +36,39 @@
   </properties>
   <build>
     <plugins>
+		<!--
+		
+		mvn install:install-file \
+		-Dfile="../uitox-ik-analyzer/target/uitox-ik-analyzer-1.2.0.jar" \
+		-DgroupId=com.uitox \
+		-DartifactId=uitox-ik-analyzer \
+		-Dversion=1.2.0 \
+		-Dpackaging=jar \
+		-DgeneratePom=true 
+		
+		-->
+		<!--- Install IK jar from local -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-install-plugin</artifactId>
+			<executions>
+				<execution>
+					<phase>initialize</phase>
+					<goals>
+						<goal>install-file</goal>
+					</goals>
+					<configuration>
+					  <groupId>com.uitox</groupId>
+					  <artifactId>uitox-ik-analyzer</artifactId>
+					  <version>1.2.0</version>
+					  <packaging>jar</packaging>
+					  <file>${basedir}/../../uitox-ik-analyzer/target/uitox-ik-analyzer-1.2.0.jar</file>
+					  <generatePom>true</generatePom>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>		
+		
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -180,6 +212,13 @@
       <scope>provided</scope>
     </dependency>
 
+     <!--- Include IK jar as dependency -->
+     <dependency>
+	  <groupId>com.uitox</groupId>
+	  <artifactId>uitox-ik-analyzer</artifactId>
+	  <version>1.2.0</version>
+     </dependency>
+			
   </dependencies>
 
   <profiles>
